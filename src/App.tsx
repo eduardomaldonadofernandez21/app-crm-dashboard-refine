@@ -1,11 +1,11 @@
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 
 import { RefineThemes, useNotificationProvider } from "@refinedev/antd";
-import { Authenticated, GitHubBanner, Refine } from "@refinedev/core";
+import { Authenticated, GitHubBanner, Refine, WelcomePage } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
-import { dataProvider, liveProvider } from "./providers";
+import { authProvider, dataProvider, liveProvider } from "./providers";
   
 import routerBindings, {
   CatchAllNavigate,
@@ -27,14 +27,16 @@ function App() {
                 liveProvider={liveProvider}
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerBindings}
-                //authProvider={}
+                authProvider={authProvider}
                 options={{
                   syncWithLocation: true,
                   warnWhenUnsavedChanges: true,
                   useNewQueryKeys: true,
                 }}
               >
-
+                <Routes>
+                  <Route index element={<WelcomePage />} />
+                </Routes>
                 <RefineKbar />
                 <UnsavedChangesNotifier />
                 <DocumentTitleHandler />
